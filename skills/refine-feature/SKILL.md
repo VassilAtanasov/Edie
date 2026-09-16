@@ -58,7 +58,7 @@ refine-feature:
 - [ ] Load Feature, Epic, siblings, existing children, architecture/source
 - [ ] Gate A: architecture analysis — STOP for picks
 - [ ] Draft story map + PBI fields + Tasks (no ADO writes)
-- [ ] Gate B: approve the spec pack — STOP for picks
+- [ ] Gate B: present suggested PBIs clearly, then STOP for spec-pack picks
 - [ ] Create approved PBIs (create-pbi / ADO-001)
 - [ ] Create approved Tasks (create-task / ADO-002)
 - [ ] Return IDs, URLs, Scope→AC matrix, leftover unknowns
@@ -104,13 +104,26 @@ When the slice adds ngx-translate keys in a library, include a **Portal i18n Tas
 
 ### Gate B — approve spec pack (no ADO writes)
 
-Show the full Feature → PBI → Task tree with field drafts and Scope→AC matrix. Ask pickable questions:
+**Order is mandatory.** The artifact being approved is the suggested PBI pack. The user must see that pack before any Gate B question.
 
-1. Story list: accept vs edit (recommended: accept Gate A–aligned list).
-2. Deposit/payout / extra slices: in vs follow-on (recommended: match Epic unless user already overrode).
-3. Iteration: inherit Feature vs leave unset (recommended: inherit).
-4. Create now vs draft-only (recommended: create now after this pick).
-5. Any Task the user wants dropped or split.
+1. **Present the suggested PBIs first** in the user-visible message (not only inside question labels). Use [reference.md](reference.md) § Gate B presentation. Include:
+   - Feature → PBI → Task tree (numbered)
+   - For **each** suggested PBI: title, story purpose, Scope bullets, AC, Tasks, readiness, traceability
+   - Scope→AC matrix
+   - Existing children that will be reused (not recreated)
+2. **Then** ask pickable questions. `AskQuestion` is allowed only after the pack is already in that same message:
+
+   1. Story list: accept vs edit (recommended: accept Gate A–aligned list).
+   2. Deposit/payout / extra slices: in vs follow-on (recommended: match Epic unless user already overrode).
+   3. Iteration: inherit Feature vs leave unset (recommended: inherit).
+   4. Create now vs draft-only (recommended: create now after this pick).
+   5. Any Task the user wants dropped or split.
+
+Hard rules for this gate:
+
+- Do not open questions until the suggested PBI list is fully rendered.
+- Do not compress the pack into option labels or a one-line summary (“accept this 4-story pack”).
+- Questions refer to the pack above; they do not replace it.
 
 **Stop.** After picks, rewrite the pack from those choices. Remaining gaps stay `unknown`.
 

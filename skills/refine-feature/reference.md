@@ -69,6 +69,39 @@ Do not paste Scope into Description. AC is derived from Scope; every Scope line 
 
 `New-Task.ps1 -ParentId <pbiId> -Title …` optional `-Description` (HTML), `-AreaPath`, `-IterationPath`. One implementable slice per Task. Evidence from the parent PBI’s TechnicalImplementationDetails + source.
 
+## Gate B presentation (before questions)
+
+Render this in the **user-visible message** first. Then ask Gate B picks. Do not skip this block or fold it into `AskQuestion` labels.
+
+```markdown
+# Spec pack — Feature #<id> <title> (not in ADO yet)
+
+## Suggested PBIs
+
+| # | Title | Readiness | Child tasks |
+|---|---|---|---|
+| 1 | … | Ready / Near Ready / Needs Decision / Blocked | … |
+
+Existing children reused (not recreated): …
+
+## PBI 1 — <title>
+- **Story purpose:** …
+- **Scope:**
+  - …
+- **AC:**
+  - GIVEN … WHEN … THEN …
+- **Tasks:**
+  - …
+- **Traceability:** Feature … / Epic … / Gate A pick …
+
+## Scope → AC
+| PBI | Scope line | AC line |
+|---|---|---|
+| 1 | … | … |
+```
+
+Repeat **PBI n** for every suggested story. Then stop for Gate B questions.
+
 ## Invoke example
 
 User:
@@ -77,7 +110,7 @@ User:
 refine-feature 306969
 ```
 
-Agent: load Feature 306969, Epic 306966, sibling Features, architecture/*, Gate A (PCI card identity, Epic BIN-only vs Card Blacklist follow-on), stop for picks, then Gate B spec pack, then create.
+Agent: load Feature 306969, Epic 306966, sibling Features, architecture/*, Gate A (PCI card identity, Epic BIN-only vs Card Blacklist follow-on), stop for picks, then present the suggested PBI pack, then Gate B questions, then create.
 
 ## Do not
 
