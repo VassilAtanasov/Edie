@@ -1,0 +1,18 @@
+{
+  "name": "edie",
+  "version": "0.1.0",
+  "description": "Edie: Vassil's local SDLC persona with refine-feature, refine-bug, and build-feature skills.",
+  "author": {
+    "name": "Vassil Atanasov"
+  },
+  "homepage": "https://github.com/VassilAtanasov/Edie",
+  "repository": "https://github.com/VassilAtanasov/Edie",
+  "keywords": [
+    "edie",
+    "sdlc",
+    "azure-devops",
+    "refine-feature",
+    "refine-bug",
+    "build-feature"
+  ]
+}
