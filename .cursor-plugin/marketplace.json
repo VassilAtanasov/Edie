@@ -1,0 +1,16 @@
+{
+  "name": "edie",
+  "owner": {
+    "name": "Vassil Atanasov"
+  },
+  "metadata": {
+    "description": "Edie: Vassil's local SDLC persona with refine-feature, refine-bug, and build-feature skills."
+  },
+  "plugins": [
+    {
+      "name": "edie",
+      "source": ".",
+      "description": "Edie: Vassil's local SDLC persona with refine-feature, refine-bug, and build-feature skills."
+    }
+  ]
+}
