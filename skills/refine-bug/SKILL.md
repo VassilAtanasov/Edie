@@ -1,7 +1,8 @@
 ---
 name: refine-bug
 description: >-
-  Refines or creates an Azure DevOps Bug with implementation-ready technical
+  Refines or creates a PXP Unity Azure DevOps Bug
+  (https://dev.azure.com/pxphq/Unity) with implementation-ready technical
   detail for human QA. Investigates codebase evidence, captures reproduction
   steps and session artifacts, asks clarifying pickable questions, then creates
   a new Bug linked to the correct parent PBI or updates an existing Bug
@@ -12,7 +13,7 @@ description: >-
 
 # Refine Bug
 
-QA refinement for a **Bug**: gather evidence from session context and source, ask the directing human pickable questions, then **create or update** the ADO work item with a full HTML Description an implementer can execute without re-triaging.
+QA refinement for a **Bug** on the PXP Unity Azure DevOps board (https://dev.azure.com/pxphq/Unity): gather evidence from session context and source, ask the engineer running this session pickable questions, then **create or update** the ADO work item with a full HTML Description an implementer can execute without re-triaging.
 
 This is **not** `fix-bug` (implementation). This is **not** `refine-feature` (Feature → PBI breakdown). Do **not** open a PR or change product code unless the user explicitly asks to fix the bug in the same turn.
 

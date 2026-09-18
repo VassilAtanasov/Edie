@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "edie",
+  "version": "0.2.0",
+  "description": "Edie automates the Unity Agents framework for long-running multi-task sessions. Edie orchestrates Unity agents, reusing their reference and knowledge base. Operates on PXP Unity Azure DevOps Features and PBIs (https://dev.azure.com/pxphq/Unity).",
+  "owner": {
+    "name": "PXP",
+    "url": "https://dev.azure.com/pxphq/Unity"
+  },
+  "plugins": [
+    {
+      "name": "edie",
+      "source": "./",
+      "description": "Edie automates the Unity Agents framework for long-running multi-task sessions. Edie orchestrates Unity agents, reusing their reference and knowledge base. Operates on PXP Unity Azure DevOps Features and PBIs (https://dev.azure.com/pxphq/Unity).",
+      "version": "0.2.0",
+      "category": "development",
+      "homepage": "https://github.com/VassilAtanasov/Edie",
+      "repository": "https://github.com/VassilAtanasov/Edie",
+      "keywords": [
+        "edie",
+        "unity",
+        "pxp",
+        "azure-devops",
+        "refine-feature",
+        "refine-bug",
+        "build-feature"
+      ]
+    }
+  ]
+}

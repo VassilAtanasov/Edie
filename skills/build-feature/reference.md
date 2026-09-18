@@ -10,7 +10,7 @@ Unity workspace (adjust if the clone root differs):
 
 Confirm script names in `Pxp.Unity.Agents.Tooling/ado/README.md` before invoking.
 
-Directing human for `AssignedTo`: `vassil.atanasov@pxp.io`.
+`AssignedTo`: Azure DevOps identity of the engineer running this session.
 
 ## Code-review subagent prompt
 
@@ -118,7 +118,7 @@ Never `push` to the inventory `defaultBranch`. Never `--bypass-policy`.
 .\Set-WorkItemState.ps1 -Id <TaskId> -State "Done"
 # PBI after all tasks Done and origin/integration contains the merge
 .\Set-WorkItemState.ps1 -Id <PbiId> -State "Done"
-.\Add-WorkItemComment.ps1 -Id <PbiId> - (comment file: branch + PR !id + per-Task commit SHAs + personal-skill close vs ADO-010)
+.\Add-WorkItemComment.ps1 -Id <PbiId> - (comment file: branch + PR !id + per-Task commit SHAs + integration-branch close vs ADO-010)
 ```
 
 Use the comment-file pattern from Tooling (no secrets in the command line).

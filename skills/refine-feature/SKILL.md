@@ -1,7 +1,8 @@
 ---
 name: refine-feature
 description: >-
-  Refines an existing Azure DevOps Feature into implementation-ready Product
+  Refines an existing PXP Unity Azure DevOps Feature
+  (https://dev.azure.com/pxphq/Unity) into implementation-ready Product
   Backlog Items and Tasks. Performs technical architecture analysis against the
   parent Epic and architecture/source evidence, then specifies and creates all
   PBIs (ADO-001) and child Tasks (ADO-002) with Scope, AC, and technical
@@ -13,7 +14,7 @@ description: >-
 
 # Refine Feature
 
-Team refinement for an **existing Feature**: architecture analysis, then PBIs, then Tasks. This is **not** `prd-story-mapping-agent` (ADR-0011 stops at stories and forbids tasks). It **sequences** `architecture-agent` analysis with `create-pbi` and `create-task`.
+Team refinement for an **existing Feature** on the PXP Unity Azure DevOps board (https://dev.azure.com/pxphq/Unity): architecture analysis, then PBIs, then Tasks. This is **not** `prd-story-mapping-agent` (ADR-0011 stops at stories and forbids tasks). It **sequences** `architecture-agent` analysis with `create-pbi` and `create-task`.
 
 State the role before proceeding: **architecture-agent** for Gate A; **ADO authoring** (`ADO-001`/`ADO-002`) for Gates B–C.
 
@@ -141,7 +142,7 @@ Then for each approved Task, follow `create-task` (`ADO-002`): `-ParentId` = new
 
 If `create-pbi` / `create-task` skills exist in the workspace, execute them rather than hand-rolling `az boards`. On script failure, report the blocker; do not invent a REST fallback unless the user directs MCP under ADR-0023 §1a.
 
-Do not set Task `In Progress`. If the user later asks: `AssignedTo` = directing human (Vassil: `vassil.atanasov@pxp.io`) in the same state call (`ADO-011`).
+Do not set Task `In Progress`. If the user later asks: `AssignedTo` = the Azure DevOps identity of the engineer running this session, in the same state call (`ADO-011`).
 
 ## Output to the user
 

@@ -1,11 +1,17 @@
 # Edie
 
-Cursor plugin for **Edie**, Vassil's local SDLC persona. It packages:
+Cursor and Claude Code plugin for **Edie**. Edie automates the Unity Agents framework for long-running multi-task sessions. Edie orchestrates Unity agents, reusing their reference and knowledge base.
 
-- Rule: introduce as Edie and route work to the matching skill
+Edie operates on PXP Unity projects in Azure DevOps — Features and PBIs at https://dev.azure.com/pxphq/Unity.
+
+It packages:
+
+- Persona: introduce as Edie and route work to the matching skill
 - Skills: `refine-feature`, `refine-bug`, `build-feature`
 
-## Install locally
+The same `skills/` tree is loaded by both hosts. Cursor reads `rules/edie.mdc`. Claude Code reads `agents/edie.md` and, when the plugin is enabled, uses Edie as the session agent.
+
+## Install in Cursor
 
 Cursor loads Cursor Plugins from `~/.cursor/plugins/local/<plugin-name>/`.
 
@@ -28,11 +34,61 @@ Then:
 
 Do not symlink the git folder into `plugins/local` — Cursor currently ignores those links. Copy (or recopy after you change files).
 
+## Install in Claude Code
+
+This repo is both the **marketplace** (`.claude-plugin/marketplace.json`) and the **plugin** (`.claude-plugin/plugin.json`, `skills/`, `agents/`).
+
+### From GitHub
+
+In Claude Code:
+
+```text
+/plugin marketplace add VassilAtanasov/Edie
+/plugin install edie@edie
+/reload-plugins
+```
+
+Or from a shell:
+
+```powershell
+claude plugin marketplace add VassilAtanasov/Edie
+claude plugin install edie@edie
+```
+
+### From a local clone
+
+```text
+/plugin marketplace add C:\git\va\Edie
+/plugin install edie@edie
+/reload-plugins
+```
+
+Or from a shell:
+
+```powershell
+claude plugin marketplace add C:\git\va\Edie
+claude plugin install edie@edie
+```
+
+To load this checkout for one session without installing:
+
+```powershell
+claude --plugin-dir C:\git\va\Edie
+```
+
+After install, skills appear as `/edie:refine-feature`, `/edie:refine-bug`, and `/edie:build-feature`. `build-feature` is user-invoked only (`disable-model-invocation`).
+
+Validate before publishing a change:
+
+```powershell
+claude plugin validate C:\git\va\Edie --strict
+```
+
 ## Skills
 
 | Skill | Use when |
 | --- | --- |
-| `refine-feature` | Specify all PBIs and Tasks of an existing Azure DevOps Feature |
+| `refine-feature` | Specify all PBIs and Tasks of an existing PXP Unity Feature |
 | `refine-bug` | File or enrich a Bug for an implementer |
 | `build-feature` | Implement specified PBIs onto a Feature integration branch |
 
@@ -40,6 +96,11 @@ Do not symlink the git folder into `plugins/local` — Cursor currently ignores 
 
 ```
 .cursor-plugin/plugin.json
+.cursor-plugin/marketplace.json
+.claude-plugin/plugin.json
+.claude-plugin/marketplace.json
+agents/edie.md
+settings.json
 rules/edie.mdc
 skills/refine-feature/
 skills/refine-bug/

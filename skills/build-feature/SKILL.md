@@ -1,19 +1,21 @@
 ---
 name: build-feature
 description: >-
-  Drains a named Azure DevOps Feature: implements each specified PBI and its
+  Drains a named PXP Unity Azure DevOps Feature
+  (https://dev.azure.com/pxphq/Unity): implements each specified PBI and its
   Tasks one by one with tests, runs independent code/security/QA reviews,
   merges only onto a long-lived Feature integration branch, and closes those
-  work items. Reuses Unity implement/review workflows and repo-type agents.
-  Use when the user says build-feature, build a Feature, drain a Feature,
-  implement feature, implement all PBIs of a Feature, or names a Feature ID
-  to build onto a feature branch (for example Feature 306968).
+  work items. Orchestrates Unity implement/review workflows and repo-type
+  agents, reusing their reference and knowledge base. Use when the user says
+  build-feature, build a Feature, drain a Feature, implement feature, implement
+  all PBIs of a Feature, or names a Feature ID to build onto a feature branch
+  (for example Feature 306968).
 disable-model-invocation: true
 ---
 
 # Build Feature
 
-Personal orchestrator. **Not** a Unity catalog role. **Not** `/autopilot`.
+Edie orchestrator for PXP Unity Features and PBIs (https://dev.azure.com/pxphq/Unity). **Not** a Unity catalog role. **Not** `/autopilot`.
 Does **not** merge to `development` / `main` / `prod` / `master` / `releases/*`.
 
 Announce before acting: session is **build-feature**; each PBI adopts the
@@ -30,7 +32,7 @@ completing PRs whose **target is the Feature integration branch**. Never pass
 
 User names a Feature ID (or URL) and wants every **specified** child PBI built
 onto one integration branch per repo, then those PBIs/Tasks closed. Companion
-to personal `refine-feature` (specify) then this skill (build).
+to `refine-feature` (specify) then this skill (build).
 
 ## Hard rules
 
@@ -117,7 +119,7 @@ Each **Task** is one implementation slice and **one git commit** on the PBI bran
 
 **Per Task (in Task ID order):**
 
-1. `Set-WorkItemState.ps1 -Id <TaskId> -State "In Progress" -AssignedTo vassil.atanasov@pxp.io` (`ADO-011`).
+1. `Set-WorkItemState.ps1 -Id <TaskId> -State "In Progress" -AssignedTo <session-user>` (`ADO-011`). Use the Azure DevOps identity of the engineer running this session.
 2. Implement **only** what that Task's title/scope requires; parent PBI AC remains the test oracle. If the Task is library UI with new translate keys and no Portal i18n Task exists, **do not skip Portal** — implement Portal `en.json` as the next repo slice of the same PBI (or stop and report the missing Task rather than shipping unreadable UI).
 3. Stage **only** files touched for this Task. If a file spans Tasks, finish the earlier Task's portion first and commit before continuing.
 4. Commit with imperative message, **Task id in the subject**:
@@ -167,9 +169,9 @@ Base the diff on the **integration branch**, not `development`, when the PBI bra
 4. If completion refuses (policies/reviewers on an unprotected branch): local `git checkout <integration>`; `git merge --no-ff <pbi-branch>`; `git push origin <integration>`. Do **not** `--bypass-policy`. Do **not** retarget to default.
 5. Confirm `origin/<integration>` contains the commits. Do not mark items Done until that is true.
 
-### Close linked items (personal deviation)
+### Close linked items (integration-branch deviation)
 
-Unity `[ADO-010]` ties PBI `Done` to merge on the **default** branch. **This personal skill** closes work when it is on the **integration** branch so the board matches the drain. Record that in the PBI comment.
+Unity `[ADO-010]` ties PBI `Done` to merge on the **default** branch. **This skill** closes work when it is on the **integration** branch so the board matches the drain. Record that in the PBI comment.
 
 1. Each implemented Task → `Done` (`Set-WorkItemState.ps1`).
 2. PBI → `Done` only if every child Task is `Done` or descoped with a comment, AC intended to be satisfied, and commits are on `origin/<integration>`.

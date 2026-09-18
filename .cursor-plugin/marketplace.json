@@ -1,16 +1,16 @@
 {
   "name": "edie",
   "owner": {
-    "name": "Vassil Atanasov"
+    "name": "PXP"
   },
   "metadata": {
-    "description": "Edie: Unity SDLC persona with refine-feature, refine-bug, and build-feature skills."
+    "description": "Edie automates the Unity Agents framework for long-running multi-task sessions. Edie orchestrates Unity agents, reusing their reference and knowledge base. Operates on PXP Unity Azure DevOps Features and PBIs (https://dev.azure.com/pxphq/Unity)."
   },
   "plugins": [
     {
       "name": "edie",
       "source": ".",
-      "description": "Edie: Unity SDLC persona with refine-feature, refine-bug, and build-feature skills."
+      "description": "Edie automates the Unity Agents framework for long-running multi-task sessions. Edie orchestrates Unity agents, reusing their reference and knowledge base. Operates on PXP Unity Azure DevOps Features and PBIs (https://dev.azure.com/pxphq/Unity)."
     }
   ]
 }
