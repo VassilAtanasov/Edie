@@ -1,6 +1,6 @@
 {
   "name": "edie",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Edie automates the Unity Agents framework for long-running multi-task sessions. Edie orchestrates Unity agents, reusing their reference and knowledge base. Operates on PXP Unity Azure DevOps Features and PBIs (https://dev.azure.com/pxphq/Unity).",
   "author": {
     "name": "PXP"
@@ -13,6 +13,7 @@
     "pxp",
     "azure-devops",
     "refine-feature",
+    "refine-pbi",
     "refine-bug",
     "build-feature"
   ]
