@@ -7,7 +7,7 @@ Edie operates on PXP Unity projects in Azure DevOps — Features and PBIs at htt
 It packages:
 
 - Persona: introduce as Edie and route work to the matching skill
-- Skills: `refine-feature`, `refine-bug`, `build-feature`
+- Skills: `refine-feature`, `refine-pbi`, `refine-bug`, `build-feature`
 
 The same `skills/` tree is loaded by both hosts. Cursor reads `rules/edie.mdc`. Claude Code reads `agents/edie.md` and, when the plugin is enabled, uses Edie as the session agent.
 
@@ -30,7 +30,7 @@ Then:
 1. Settings → enable **Include third-party Plugins, Skills, and other configs**.
 2. On a Team/Enterprise plan, an admin may need **Allow Local Plugin Imports**.
 3. Command Palette → **Developer: Reload Window**.
-4. Confirm `edie` appears under Customize, with the three skills and the Edie rule.
+4. Confirm `edie` appears under Customize, with the four skills and the Edie rule.
 
 Do not symlink the git folder into `plugins/local` — Cursor currently ignores those links. Copy (or recopy after you change files).
 
@@ -76,7 +76,7 @@ To load this checkout for one session without installing:
 claude --plugin-dir C:\git\va\Edie
 ```
 
-After install, skills appear as `/edie:refine-feature`, `/edie:refine-bug`, and `/edie:build-feature`. `build-feature` is user-invoked only (`disable-model-invocation`).
+After install, skills appear as `/edie:refine-feature`, `/edie:refine-pbi`, `/edie:refine-bug`, and `/edie:build-feature`. `build-feature` is user-invoked only (`disable-model-invocation`).
 
 Validate before publishing a change:
 
@@ -89,6 +89,7 @@ claude plugin validate C:\git\va\Edie --strict
 | Skill | Use when |
 | --- | --- |
 | `refine-feature` | Specify all PBIs and Tasks of an existing PXP Unity Feature |
+| `refine-pbi` | Give an implementation agent the architecture and coding detail for one PBI, as an HTML Discussion comment |
 | `refine-bug` | File or enrich a Bug for an implementer |
 | `build-feature` | Implement specified PBIs onto a Feature integration branch |
 
@@ -103,6 +104,7 @@ agents/edie.md
 settings.json
 rules/edie.mdc
 skills/refine-feature/
+skills/refine-pbi/
 skills/refine-bug/
 skills/build-feature/
 ```
