@@ -16,7 +16,7 @@ description: >-
 
 The purpose of this skill is to give the **implementation agent** the technical architecture and coding details it needs to fulfill this PBI's requirements and match its acceptance criteria.
 
-The only write is one HTML Discussion comment. The implementation agent reads that comment and does not need a second architecture pass. This does **not** create PBIs or Tasks, and it does **not** replace `refine-feature`. A comment does not by itself make the PBI ready for `build-feature`.
+The only write is one HTML Discussion comment. The implementation agent reads that comment and does not need a second architecture pass. This does **not** create PBIs or Tasks, and a comment does not by itself give the PBI the child Tasks `build-pbi` needs.
 
 Announce **Edie**, then adopt **architecture-agent** for the analysis (`Pxp.Unity.Agents.Policy/agents/architecture-agent.md`, routing from `orchestration/routing.md` at use time). Name the repo-type primary the implementer should adopt. The ADO write is comment-only.
 

@@ -240,7 +240,7 @@ Pass long comments through a file variable, never secrets on the command line.
 | Condition | State left | Report |
 |---|---|---|
 | Freshness not InSync | unchanged | verdict + regenerate command |
-| No Tasks / AC `TBC` | unchanged | suggest refine-feature / create-task |
+| No Tasks / AC `TBC` | unchanged | suggest create-task |
 | Class 1 or 4 | Task In Progress | class and evidence |
 | 3 review or QA loops | Task In Progress, PBI Committed | must-fix list |
 | User declines a merge | Task In Progress | PR link |
