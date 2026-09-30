@@ -7,7 +7,8 @@ Edie operates on PXP Unity projects in Azure DevOps — Features and PBIs at htt
 It packages:
 
 - Persona: introduce as Edie and route work to the matching skill
-- Skills: `refine-feature`, `refine-pbi`, `refine-bug`, `build-feature`, `build-pbi`
+- Skills: `refine-pbi`, `refine-bug`, `build-pbi`
+- Disabled: `refine-feature`, `build-feature` (kept in `disabled-skills/`, not loaded)
 
 The same `skills/` tree is loaded by both hosts. Cursor reads `rules/edie.mdc`. Claude Code reads `agents/edie.md` and, when the plugin is enabled, uses Edie as the session agent.
 
@@ -30,7 +31,7 @@ Then:
 1. Settings → enable **Include third-party Plugins, Skills, and other configs**.
 2. On a Team/Enterprise plan, an admin may need **Allow Local Plugin Imports**.
 3. Command Palette → **Developer: Reload Window**.
-4. Confirm `edie` appears under Customize, with the five skills and the Edie rule.
+4. Confirm `edie` appears under Customize, with the three skills and the Edie rule.
 
 Do not symlink the git folder into `plugins/local` — Cursor currently ignores those links. Copy (or recopy after you change files).
 
@@ -76,7 +77,7 @@ To load this checkout for one session without installing:
 claude --plugin-dir C:\git\va\Edie
 ```
 
-After install, skills appear as `/edie:refine-feature`, `/edie:refine-pbi`, `/edie:refine-bug`, `/edie:build-feature`, and `/edie:build-pbi`. `build-feature` and `build-pbi` are user-invoked only (`disable-model-invocation`).
+After install, skills appear as `/edie:refine-pbi`, `/edie:refine-bug` and `/edie:build-pbi`. `build-pbi` is user-invoked only (`disable-model-invocation`).
 
 Validate before publishing a change:
 
@@ -88,11 +89,11 @@ claude plugin validate C:\git\va\Edie --strict
 
 | Skill | Use when |
 | --- | --- |
-| `refine-feature` | Specify all PBIs and Tasks of an existing PXP Unity Feature |
 | `refine-pbi` | Give an implementation agent the architecture and coding detail for one PBI, as an HTML Discussion comment |
 | `refine-bug` | File or enrich a Bug for an implementer |
-| `build-feature` | Implement specified PBIs onto a Feature integration branch |
 | `build-pbi` | Implement one PBI and its Tasks via reviewed task PRs into a PBI branch, leaving one PR for a human |
+
+`refine-feature` and `build-feature` are **disabled** while they have known issues. Their files are kept in `disabled-skills/`, outside the `skills/` folder both hosts load, so they cannot be invoked. See `disabled-skills/README.md` to re-enable one.
 
 ## Layout
 
@@ -104,9 +105,9 @@ claude plugin validate C:\git\va\Edie --strict
 agents/edie.md
 settings.json
 rules/edie.mdc
-skills/refine-feature/
 skills/refine-pbi/
 skills/refine-bug/
-skills/build-feature/
 skills/build-pbi/
+disabled-skills/refine-feature/
+disabled-skills/build-feature/
 ```

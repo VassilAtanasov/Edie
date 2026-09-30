@@ -15,7 +15,7 @@ description: >-
 
 QA refinement for a **Bug** on the PXP Unity Azure DevOps board (https://dev.azure.com/pxphq/Unity): gather evidence from session context and source, ask the engineer running this session pickable questions, then **create or update** the ADO work item with a full HTML Description an implementer can execute without re-triaging.
 
-This is **not** `fix-bug` (implementation). This is **not** `refine-feature` (Feature → PBI breakdown). Do **not** open a PR or change product code unless the user explicitly asks to fix the bug in the same turn.
+This is **not** `fix-bug` (implementation). Do **not** open a PR or change product code unless the user explicitly asks to fix the bug in the same turn.
 
 State the role before proceeding: **QA triage / ADO authoring** (investigation + work-item write).
 

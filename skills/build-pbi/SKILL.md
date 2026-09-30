@@ -9,7 +9,7 @@ description: >-
   ready-for-review PR from the PBI branch to the default branch so a human
   reviews a single PR. Moves Task and PBI states per ADO-010/011. Use when the
   user says build-pbi, build a PBI, implement a PBI with its Tasks, or names a
-  PBI ID to implement (for example PBI 306980).
+  PBI ID to implement (for example PBI 312486).
 disable-model-invocation: true
 ---
 
@@ -23,7 +23,7 @@ The one PR a human reviews is `<PBI branch>` → inventory `defaultBranch`. This
 
 ## When to use
 
-The user names a PBI (ID or URL) that is refined, has child Tasks, and should be built end to end. Companion to `refine-pbi` (architecture detail) and `refine-feature` (PBIs and Tasks). For many PBIs of a Feature use `build-feature`.
+The user names a PBI (ID or URL) that is refined, has child Tasks, and should be built end to end. Companion to `refine-pbi` (architecture detail).
 
 ## Hard rules
 
@@ -55,7 +55,7 @@ Stop and ask if any fails.
    - State is not `Done`, `Removed` or `Rejected`.
    - `Microsoft.VSTS.Common.AcceptanceCriteria` has real intent (no `TBC`).
    - If `Custom.Scope` is populated, every Scope line has at least one AC line (`[ADO-001]`).
-   - At least one child Task (`[ADO-002]`). If none: stop and suggest `refine-feature` or the `create-task` procedure. This skill does not create Tasks.
+   - At least one child Task (`[ADO-002]`). If none: stop and suggest the `create-task` procedure. This skill does not create Tasks.
    - Area path is in the user's scope, or the user named this ID (`[ADO-012]`).
 
 ## Inputs
