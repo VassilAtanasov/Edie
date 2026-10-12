@@ -89,9 +89,9 @@ claude plugin validate C:\git\va\Edie --strict
 
 | Skill | Use when |
 | --- | --- |
-| `refine-pbi` | Give an implementation agent the architecture and coding detail for one PBI, as an HTML Discussion comment |
+| `refine-pbi` | Give an implementation agent the architecture and coding detail for one PBI by filing its child Tasks: one per slice with the detail in its description, plus a `Human QA:` Task. Shown for review first; no comment is posted |
 | `refine-bug` | File or enrich a Bug for an implementer |
-| `build-pbi` | Implement one PBI and its Tasks via reviewed task PRs into a PBI branch, leaving one PR for a human |
+| `build-pbi` | Implement one PBI and its Tasks via reviewed task PRs into a PBI branch, leaving one PR for a human. `--resume` continues in a new session; `--followup <source>` handles findings on the final PR; `--close` sets the PBI Done after the human merge |
 
 `refine-feature` and `build-feature` are **disabled** while they have known issues. Their files are kept in `disabled-skills/`, outside the `skills/` folder both hosts load, so they cannot be invoked. See `disabled-skills/README.md` to re-enable one.
 
