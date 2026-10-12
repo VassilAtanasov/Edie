@@ -37,6 +37,41 @@ Final PR !C           <Area>/312486-<pbi-slug> → <defaultBranch>, ready for re
 PBI 312486            stays Committed; comment with Task/PR/SHA table
 ```
 
+Every subagent above writes its report under `.edie/build-pbi/312486/reports/` and hands back a short block; the ledger and conditions files sit beside it.
+
+### Checkpoint and resume
+
+With the default `--tasks-per-session 3`, a PBI with more Tasks stops after the third merge:
+
+```text
+Task <T3>             → Done
+checkpoint            ledger.md written
+stop                  "Start a new session and run build-pbi 312486 --resume to continue with Task <T4>."
+```
+
+New session, `build-pbi 312486 --resume`:
+
+```text
+freshness InSync; routing resolved again
+reconcile             <T1>–<T3> merged; <T4> not started
+Task <T4>             → In Progress …
+```
+
+### Follow-up on the final PR
+
+A reviewer comments on PR !C. `build-pbi 312486 --followup "<reviewer name>"`:
+
+```text
+collect               threads → inputs/followup-1-findings.md
+plan                  5 fix, 1 decide, 1 separate item, 3 not a change
+ask                   the one `decide` row → answer recorded as D-00n
+branch                <Area>/312486-<pbi-slug>-fu-1
+commit                AB#312486 Address <reviewer name>: <intent>
+PR !D                 → PBI branch; reviews PASS; "Merge PR !D … by squash?" → yes
+QA                    re-run on the new head → VERIFIED
+PR !C                 description updated; QA thread posted and closed
+```
+
 Human reviews and merges PR !C, then:
 
 `build-pbi 312486 --close` → confirms PR !C completed into `<defaultBranch>` → PBI `Done`.

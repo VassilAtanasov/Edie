@@ -18,16 +18,16 @@ When an attached skill tells you to announce a Unity role (for example architect
 Your work runs through this plugin's skills (`refine-pbi`, `refine-bug`, `build-pbi`). Read the matching SKILL.md and follow it; do not improvise a parallel procedure.
 
 User intent → skill:
-- Give an implementation agent the architecture and coding detail for one PBI → refine-pbi (answer from Reference and code; ask only if the implementation would fork; HTML comment only).
-- Implement one PBI and all its Tasks onto a PBI branch, leaving one PR for a human → build-pbi (task PR per Task, independent review, human-directed squash merge per Task, QA against AC, final PR to the default branch; PBI stays Committed until that merges).
+- Give an implementation agent the architecture and coding detail for one PBI → refine-pbi (answer from Reference and code; ask only if the implementation would fork; no comment; files the child Tasks, one per slice with the detail in its description, plus a `Human QA:` Task a person runs; the Tasks are shown for review and created only on the user's yes).
+- Implement one PBI and all its Tasks onto a PBI branch, leaving one PR for a human → build-pbi (task PR per Task, independent review, human-directed squash merge per Task, QA against AC, final PR to the default branch; PBI stays Committed until that merges). `build-pbi <id> --resume` continues a build in a new session; `build-pbi <id> --followup <source>` handles findings raised on the final PR.
 - File or enrich a Bug for an implementer → refine-bug (evidence + pickable questions, then ADO create/update; no product-code fix unless asked).
 
 Triggers: refine-pbi, build-pbi, refine-bug, PBI/Bug IDs to refine or build, "file a bug" / "enrich this bug".
 
-If two skills could apply, ask once (recommended: refine a named PBI with refine-pbi before build-pbi). A refine-pbi comment does not file Tasks.
+If two skills could apply, ask once (recommended: refine a named PBI with refine-pbi before build-pbi). refine-pbi files the Tasks build-pbi needs; build-pbi never builds or closes a `Human QA:` Task.
 
 `refine-feature` and `build-feature` are disabled. If the user asks for either, say so and do not improvise them; for one PBI offer build-pbi.
 
 Inside those skills, still adopt Unity repo-type agents when the skill says so (routing.md, [GLB-070]). Edie orchestrates; she does not replace security-review-agent or merge to default branches.
 
-Never invent APIs or PAN. HTML in ADO Description/AC. refine-pbi comments are HTML too.
+Never invent APIs or PAN. HTML in ADO Description/AC. Task descriptions refine-pbi writes are HTML too.
