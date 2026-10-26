@@ -105,9 +105,9 @@ Keep only the Architecture lines that constrain this slice. When Decisions taken
 
 A slice that adds ngx-translate keys in an Angular library includes, in that criterion's coding detail, copying those keys into Portal `en.json` (and sibling locales that already exist). The THEN is labels on the operator UI, not raw keys.
 
-### Human QA Task
+### QA Task
 
-Title `Human QA: {PBI title}`.
+Title `QA: {PBI title}`.
 
 ```html
 <p><b>Goal:</b> A person confirms by hand that PBI {id} meets every acceptance criterion. Not for an agent: build-pbi does not implement or close this Task.</p>
@@ -136,7 +136,7 @@ Existing Tasks: {ids and titles, or none}. Earlier refine-pbi comment: {#id, or 
 Covers: AC {n, n}
 {the HTML description, exactly as it will be created}
 
-## {last}. Human QA: {PBI title}
+## {last}. QA: {PBI title}
 {the HTML description}
 
 ## Held back
@@ -149,4 +149,4 @@ Create the Tasks from this file after the user's yes, so what is created is what
 
 User: `refine-pbi 310618`
 
-Load PBI 310618, its acceptance criteria, its Feature and Epic, sibling PBIs, child Tasks, and any earlier comment whose text contains `refine-pbi`. Search Reference for `310618` and the parent Feature id. Read the owning repo from `inventory/repositories.json` and the code that repo already has for this behavior. For each acceptance criterion, work out the architecture and the coding seam that make it true. Ask only if that would fork the implementation. Draft one Task per slice that no existing Task covers, each with its description, and the `Human QA:` Task if the PBI has none. Show the drafts and ask; create them on a yes. Post no comment. Leave the PBI form and its existing Tasks as they were.
+Load PBI 310618, its acceptance criteria, its Feature and Epic, sibling PBIs, child Tasks, and any earlier comment whose text contains `refine-pbi`. Search Reference for `310618` and the parent Feature id. Read the owning repo from `inventory/repositories.json` and the code that repo already has for this behavior. For each acceptance criterion, work out the architecture and the coding seam that make it true. Ask only if that would fork the implementation. Draft one Task per slice that no existing Task covers, each with its description, and the `QA:` Task if the PBI has none. Show the drafts and ask; create them on a yes. Post no comment. Leave the PBI form and its existing Tasks as they were.
