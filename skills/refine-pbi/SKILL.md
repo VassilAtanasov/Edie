@@ -34,7 +34,7 @@ The user names a PBI ID (or a work-item URL containing it) and wants that PBI ma
 - Do not invent product or design facts. Unevidenced items are `unknown` plus a follow-up (`GLB-012`).
 - **New Tasks only.** Do not post a Discussion comment. Do not change the PBI's Title, Description, Scope, Story Purpose, Acceptance Criteria, Technical Implementation Details, Assumptions, state, assignment, area, or iteration. Do not edit, re-parent, re-state or delete an existing Task.
 - **Every Task this skill creates has a Description.** Never call `New-Task.ps1` without `-Description`. The description is HTML from the templates in [reference.md](reference.md#task-descriptions) and is enough to implement the slice without any other document.
-- **At least one human QA Task.** After this skill runs, the PBI has a Task whose title starts with `Human QA:`, listing every acceptance criterion as a check a person runs by hand. If one already exists, do not create another. An agent never implements or closes it.
+- **At least one QA Task.** After this skill runs, the PBI has a Task whose title starts with `QA:`, listing every acceptance criterion as a check a person runs by hand. If one already exists, do not create another. An agent never implements or closes it.
 - **Tasks are created only after the user reviews them.** Show the full list of Tasks to be created and wait for an explicit yes. No Task is created before that answer, and a yes covers only the list that was shown.
 - **Freshness gate `[GLB-071]`** before the first write: run `Test-PolicySnapshotFreshness.ps1`; only `InSync` proceeds. On a stale verdict, stop and ask the user to regenerate the workspace.
 - Decide from evidence when the answer is clear. Ask only when the unanswered choice would make the implementer build the wrong thing or miss an acceptance criterion.
@@ -52,7 +52,7 @@ Load, in order:
 
 1. The PBI requirements: title, description, Scope, acceptance criteria, story purpose, technical implementation details, assumptions, parent, area and iteration. `Get-WorkItem.ps1` prints a short summary and strips Description HTML. Read Scope, AC, and parent from `az boards work-item show` JSON when the summary omits them. See [reference.md](reference.md).
 2. Parent **Feature**, then parent **Epic**, including POC branch constraints. Sibling PBIs under that Feature (do not implement their scope here).
-3. Existing child Tasks (`Get-WorkItemChildren.ps1`), with their descriptions. A slice an existing Task covers is not filed again. Note whether a `Human QA:` Task exists.
+3. Existing child Tasks (`Get-WorkItemChildren.ps1`), with their descriptions. A slice an existing Task covers is not filed again. Note whether a `QA:` Task exists.
 4. Existing Discussion comments, read-only. An earlier `refine-pbi` comment (older runs posted one) is evidence of decisions already taken; cite it, do not edit it. If that read fails, say so and continue without it.
 5. `Pxp.Unity.Agents.Reference`: search the PBI id, the Feature id, and distinctive title words. Read the matching initiative's requirements, clarifications, `decisions.md`, architecture options, and ADR drafts, plus `domains/` when present.
 6. Accepted Policy: `architecture/SERVICE_MAP.md`, `SYSTEM_CONTEXT.md`, `BIG_PICTURE.md`, `EVENT_FLOW.md`, accepted ADRs, `inventory/repositories.json`.
@@ -67,7 +67,7 @@ refine-pbi:
 - [ ] Load PBI requirements and AC, Feature, Epic, siblings, child Tasks, prior comments
 - [ ] Investigate Reference, Policy architecture, and the code the implementer will change
 - [ ] Map every AC to architecture + coding detail; ask only if that map would fork
-- [ ] Split the map into slices in build order; draft one Task per unfiled slice, and one Human QA Task
+- [ ] Split the map into slices in build order; draft one Task per unfiled slice, and one QA Task
 - [ ] Show the Tasks for review; create them only on the user's yes
 - [ ] Return PBI URL, Task ids, verdict, decisions, unknowns
 ```
@@ -98,7 +98,7 @@ Verdict `Ready` means every acceptance criterion has enough architecture and cod
 
 1. **Slices.** Split the work into slices in build order. Every acceptance criterion is covered by at least one slice. Drop every slice an existing child Task already covers. When the verdict is `Needs Decision` or `Blocked`, hold back every slice that depends on a blocked acceptance criterion, and say which and why.
 2. **Implementation Task.** Title is the slice's imperative intent, without the PBI id. The description, from the implementation template, carries: the goal, the repo and primary agent, the architecture that constrains the slice, and for each acceptance criterion it covers the criterion text, the coding detail with its evidenced seam, and the test or check that shows the THEN. Then what it depends on, what it leaves alone, the decisions taken with their citations, and the unknowns. Architecture shared by several slices is repeated in each, briefly: a Task is read on its own.
-3. **Human QA Task.** If no child Task's title starts with `Human QA:`, draft one: `Human QA: <PBI title>`. Its description, from the QA template, lists **every** acceptance criterion as a numbered check with the steps and the expected result, and names the environment and the test data needed. Test data never includes a PAN; card data is a BIN prefix or a named test card from the repo's own fixtures. One Task covers all criteria; draft a second only when the criteria are checked in two separate operator UIs or environments.
+3. **QA Task.** If no child Task's title starts with `QA:`, draft one: `QA: <PBI title>`. Its description, from the QA template, lists **every** acceptance criterion as a numbered check with the steps and the expected result, and names the environment and the test data needed. Test data never includes a PAN; card data is a BIN prefix or a named test card from the repo's own fixtures. One Task covers all criteria; draft a second only when the criteria are checked in two separate operator UIs or environments.
 4. **Review file.** Write the drafts to the review file ([reference.md](reference.md#review-file)): verdict, then each Task in creation order with its title and full description, the human QA Task last, then held-back slices.
 
 ### Review, then create
@@ -117,17 +117,18 @@ Creating follows the `create-task` procedure (`Pxp.Unity.Agents.Policy/orchestra
 4. Leave the Tasks unassigned in their initial state. Do not set state or `AssignedTo`.
 5. Confirm with `Get-WorkItemChildren.ps1 -Id <PBIId>` that each new Task is under the PBI. If a create fails, stop; report the Tasks already created and the slices left. Do not retry with a hand-rolled call.
 
-A later run files only slices that no existing Task covers, and never a second `Human QA:` Task. It does not rewrite the description of a Task an earlier run created; if the new analysis changes a slice already filed, say so in the output and leave the Task as it is.
+A later run files only slices that no existing Task covers, and never a second `QA:` Task. It does not rewrite the description of a Task an earlier run created; if the new analysis changes a slice already filed, say so in the output and leave the Task as it is.
 
 ## Output to the user
 
 - PBI id and URL (`https://dev.azure.com/pxphq/Unity/_workitems/edit/<id>`).
 - Verdict: whether the implementation agent can meet every acceptance criterion from the Tasks.
-- Tasks created: id, title, and the acceptance criteria each covers; the `Human QA:` Task id (created now, or the one that already existed).
+- Tasks created: id, title, and the acceptance criteria each covers; the `QA:` Task id (created now, or the one that already existed).
 - Slices held back and why. Decisions applied, and any acceptance criterion still blocked.
 - Existing Tasks with an empty description, if any: listed, not edited.
 - If the user declined: no Tasks were filed, and the review file's path.
 - Explicitly: no comment was posted; PBI fields and state, and existing Tasks, were left unchanged.
+- **Hand-off.** When Tasks were created, end by proposing `build-pbi <PBIId>` as a **New task card** for a fresh session (`start_session`, own_initiative, fresh context, `use_worktree: false` on the workspace checkout, a brief that names the PBI, the Task ids in build order, the repo and the run-folder path). The build runs for hours, owns its own branch and PRs, and must not inherit the refinement context, so it is never a wrap-up button and never started in this session — even if the user says `build-pbi <id>` right after: explain this and offer the card. Propose the card with a lesser model than the session running refine-pbi (the `model` parameter of `start_session`).
 
 ## Additional resources
 
