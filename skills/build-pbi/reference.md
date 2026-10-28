@@ -10,6 +10,8 @@ Unity workspace root (adjust if the clone root differs):
 - Scripts: `Pxp.Unity.Agents.Tooling/ado/` (confirm names in `ado/README.md`)
 - Freshness: `Pxp.Unity.Agents.Tooling/workspace-setup/Test-PolicySnapshotFreshness.ps1`
 
+- Edie skills (`<EDIE_SKILLS>`): the `skills/` folder of the installed Edie plugin; the DB checklist is `<EDIE_SKILLS>/review-db-pr/reference.md`
+
 - Run folder: `.edie/build-pbi/<PBIId>/` at the workspace root (see [Run folder](#run-folder))
 
 `AssignedTo`: Azure DevOps identity of the engineer running the session.
@@ -267,6 +269,28 @@ PAN or secrets in the diff = FAIL. BIN prefixes only is fine.
 Read <RUN_FOLDER>/conditions.md and check the open rows that apply to Task <TaskId> or to "all".
 
 Verdict is PASS, FAIL or STOP-CLASS-1, with mitigations and evidence in the report.
+<Reviewer closing lines>
+```
+
+## DB-review prompt
+
+```text
+You did not write this code. Operate as <LEAD_REVIEWER>, reviewing the database part only.
+Read <EDIE_SKILLS>/review-db-pr/reference.md (rules A–F, severity, evidence gating in
+<EDIE_SKILLS>/review-db-pr/SKILL.md "Hard rules") and
+Pxp.Unity.Agents.Policy/guidelines/data-persistence-and-migrations.md.
+
+Repository: <ABS_REPO>
+Diff: git diff origin/<PBI_BRANCH>...<TASK_BRANCH>
+DB files: <list>
+Read in full: each new or changed table script, the parent tables its FKs reference,
+the EF configuration and Dapper SQL for those tables, the repo's script tests.
+Read <RUN_FOLDER>/conditions.md and check the open rows that apply to Task <TaskId> or to "all".
+
+Apply every DBR rule to every table and column in the diff. Do not ask the user,
+deploy anything, or post per-finding threads. Do not change code.
+Verdict is PASS (no must-fix), REWORK, or STOP-CLASS-3 (Pxp.Unity.Db or cross-domain
+change without a named per-domain owner). Every must-fix has file:line and a rule id.
 <Reviewer closing lines>
 ```
 
