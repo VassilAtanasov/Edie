@@ -105,7 +105,7 @@ build-pbi <PBIId>:
   - [ ] Task branch from current origin/<PBI branch>
   - [ ] Primary implements Task + tests; commit AB#<TaskId>; push
   - [ ] Task PR → PBI branch; link Task + PBI
-  - [ ] Code review (+ security if routed) in fresh sessions
+  - [ ] Code review (+ security if routed, + DB if DB files) in fresh sessions
   - [ ] Rework (max 3 loops) until PASS
   - [ ] Ask user to direct this PR's squash merge
   - [ ] Target guard; Complete-PullRequest -HumanDirected -Squash -DeleteSourceBranch
@@ -142,6 +142,7 @@ For each Task (Task ID order unless the user ordered them):
 7. **Review.** Launch the reviews in **one** message, in parallel, each a fresh subagent that did not write the code:
    - **Code**: `<leadReviewer>` (e.g. `backend-quality-agent`), following `orchestration/workflows/review-pull-request.md` on the task PR diff (`origin/<PBI branch>...<task branch>`). May add tests; may not change behaviour. `VERDICT: PASS | REWORK`.
    - **Security** (only if routed): `security-review-agent`. `VERDICT: PASS | FAIL | STOP-CLASS-1`.
+   - **DB** (only when the diff has DB files: `**/*.Db/**`, `*.sql`, `*.sqlproj`, `*.refactorlog`, `**/Migrations/**`, EF `DbContext`/entity configuration, Dapper SQL): `<leadReviewer>` applying the `review-db-pr` checklist ([../review-db-pr/reference.md](../review-db-pr/reference.md)), prompt in [reference.md](reference.md#db-review-prompt). `VERDICT: PASS | REWORK | STOP-CLASS-3`. `STOP-CLASS-3` stops like `STOP-CLASS-1`.
    - Each reviewer writes its report to `reports/<TaskId>-<role>-r<round>.md` and records its own verdict on the PR with `New-PullRequestThread.ps1` (`review_record: …`, at most 1,500 characters: verdict, head SHA, must-fix lines, conditions). It hands back the reviewer block with the thread id. The orchestrator does not rewrite verdicts into threads.
    - Record each verdict, its head SHA and its round in `ledger.md`; append `NEW-CONDITIONS` lines to `conditions.md`.
 8. **Rework.** On `REWORK` / `FAIL`: dispatch the primary with the **paths** of the failing reports, not their text. It fixes on the same task branch with a new commit `AB#<TaskId> Address review: …`, push, re-run every routed review (new commits reset the review). After **3** loops without pass, stop the PBI: leave the Task `In Progress`, comment the blocker on Task and PBI, report. `STOP-CLASS-1` stops immediately.
