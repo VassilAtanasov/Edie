@@ -10,7 +10,7 @@ Unity workspace root (adjust if the clone root differs):
 - Scripts: `Pxp.Unity.Agents.Tooling/ado/` (confirm names in `ado/README.md`)
 - Freshness: `Pxp.Unity.Agents.Tooling/workspace-setup/Test-PolicySnapshotFreshness.ps1`
 
-- Edie skills (`<EDIE_SKILLS>`): the `skills/` folder of the installed Edie plugin; the DB checklist is `<EDIE_SKILLS>/review-db-pr/reference.md`
+- Edie skills (`<EDIE_SKILLS>`): the `skills/` folder of the installed Edie plugin; the DB checklist is `<EDIE_SKILLS>/review-db-pr/reference.md`; the Sonar rules are `<EDIE_SKILLS>/build-pbi/sonar-rules.md` ([sonar-rules.md](sonar-rules.md))
 
 - Run folder: `.edie/build-pbi/<PBIId>/` at the workspace root (see [Run folder](#run-folder))
 
@@ -190,6 +190,9 @@ Conditions: every open row that applies to Task <TaskId> or to "all" is in scope
 Every row under Decisions is settled; do not reopen it.
 
 Implement only this Task's scope. Tests ship in the same change.
+If the change adds or edits .cs files: read <EDIE_SKILLS>/build-pbi/sonar-rules.md,
+write against its rules, and run its check before handing back. A rule hit on a new
+line is not done.
 Change only this repository. Never log PAN or secrets.
 If the change hits ADR-0004 class 1 or 4, stop and say so.
 Commit: "AB#<TaskId> <imperative intent>" with body "Parent PBI AB#<PBIId>."
@@ -197,7 +200,7 @@ Commit: "AB#<TaskId> <imperative intent>" with body "Parent PBI AB#<PBIId>."
 Write the task PR description to pr/<TaskId>.md, under 4,000 characters, in this shape:
 <Task PR description template>
 Write your full report to reports/<TaskId>-impl-r<round>.md: files changed, tests added
-and their result, anything unknown. Never put PAN, secrets or tokens in it.
+and their result, the Sonar check result (projects checked, hits fixed), anything unknown. Never put PAN, secrets or tokens in it.
 End with the implementer handback block and nothing else. Do not repeat the report.
 <Handback: implementer block>
 ```
@@ -226,6 +229,9 @@ Read from it: inputs/task-<TaskId>.txt, inputs/acceptance-criteria.txt, conditio
 
 Hunt: correctness, Task scope gaps, missing or hollow tests, contract breaks,
 secrets/PAN, change-class triggers. Ignore formatter noise.
+If the diff adds or edits .cs files: check every rule in
+<EDIE_SKILLS>/build-pbi/sonar-rules.md on the added lines of the whole diff. Each hit
+is a must-fix with file:line and the rule id.
 You may add tests; do not change product behaviour. Say if you added tests.
 Check the open conditions that apply to Task <TaskId> or to "all". Put anything a
 later Task, the final PR or the approver must honour in NEW-CONDITIONS, one line each.
@@ -338,6 +344,8 @@ If the app cannot start, that is `NOT VERIFIED` and counts as a QA loop.
 ```
 
 Classes: `fix`, `settled`, `decide`, `separate item`, `not a change`.
+
+For `--followup sonar`, a finding that matches a rule in [sonar-rules.md](sonar-rules.md) is `fix`, and the fix follows that rule's "Do instead".
 
 Follow-up implementer, add to the implementer prompt (in place of the Task lines):
 

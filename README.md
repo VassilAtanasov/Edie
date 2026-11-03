@@ -91,7 +91,7 @@ claude plugin validate C:\git\va\Edie --strict
 | --- | --- |
 | `refine-pbi` | Give an implementation agent the architecture and coding detail for one PBI by filing its child Tasks: one per slice with the detail in its description, plus a `QA:` Task. Shown for review first; no comment is posted |
 | `refine-bug` | File or enrich a Bug for an implementer |
-| `build-pbi` | Implement one PBI and its Tasks via reviewed task PRs into a PBI branch, leaving one PR for a human. `--resume` continues in a new session; `--followup <source>` handles findings on the final PR; `--close` sets the PBI Done after the human merge |
+| `build-pbi` | Implement one PBI and its Tasks via reviewed task PRs into a PBI branch, leaving one PR for a human. `--resume` continues in a new session; `--followup <source>` handles findings on the final PR; `--close` sets the PBI Done after the human merge. Implementers and code reviewers apply the Sonar C#/NUnit rules in `build-pbi/sonar-rules.md` |
 | `review-db-pr` | Review the DB part of a PR (DACPAC `.sql`, EF Core, Dapper) against the Unity data rules and the DB Scripts Reviewers' rules. Findings first; one PR thread per finding and a fix branch into the PR's source branch only on the user's yes. build-pbi runs the same checklist when a task diff has DB files |
 
 `refine-feature` and `build-feature` are **disabled** while they have known issues. Their files are kept in `disabled-skills/`, outside the `skills/` folder both hosts load, so they cannot be invoked. See `disabled-skills/README.md` to re-enable one.
