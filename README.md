@@ -77,7 +77,7 @@ To load this checkout for one session without installing:
 claude --plugin-dir C:\git\va\Edie
 ```
 
-After install, skills appear as `/edie:refine-pbi`, `/edie:refine-bug`, `/edie:build-pbi` and `/edie:review-db-pr`. `build-pbi` is user-invoked only (`disable-model-invocation`).
+After install, skills appear as `/edie:refine-pbi`, `/edie:refine-bug`, `/edie:build-pbi` and `/edie:review-db-pr`.
 
 Validate before publishing a change:
 

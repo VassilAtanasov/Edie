@@ -128,10 +128,7 @@ A later run files only slices that no existing Task covers, and never a second `
 - Existing Tasks with an empty description, if any: listed, not edited.
 - If the user declined: no Tasks were filed, and the review file's path.
 - Explicitly: no comment was posted; PBI fields and state, and existing Tasks, were left unchanged.
-- **Next action.** When Tasks were created, end with the next prompt to run, as a suggestion only, for example:
-  > Next: run `build-pbi <PBIId>` in a fresh session (Tasks <ids> in build order).
-
-  Do not open a New task card or sub-session (`start_session`) for it, and do not start the build yourself. The build runs for hours, owns its own branch and PRs, and is better without the refinement context, so suggest a fresh session.
+- **Hand-off.** When Tasks were created, end by proposing `build-pbi <PBIId>` as a **New task card** for a fresh session (`start_session`, own_initiative, fresh context, `use_worktree: false` on the workspace checkout, a brief that names the PBI, the Task ids in build order, the repo and the run-folder path). The build runs for hours, owns its own branch and PRs, and must not inherit the refinement context, so it is never a wrap-up button and never started in this session — even if the user says `build-pbi <id>` right after: explain this and offer the card. Propose the card with a lesser model than the session running refine-pbi (the `model` parameter of `start_session`).
 
 ## Additional resources
 

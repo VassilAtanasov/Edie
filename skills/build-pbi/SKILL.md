@@ -10,7 +10,6 @@ description: >-
   reviews a single PR. Moves Task and PBI states per ADO-010/011. Use when the
   user says build-pbi, build a PBI, implement a PBI with its Tasks, or names a
   PBI ID to implement (for example PBI 312486).
-disable-model-invocation: true
 ---
 
 # Build PBI
