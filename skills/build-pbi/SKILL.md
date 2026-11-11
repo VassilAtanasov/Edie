@@ -38,7 +38,7 @@ The user names a PBI (ID or URL) that is refined, has child Tasks, and should be
 - **PBI `Done` only per `[ADO-010]`**: after the final PR is merged to the default branch by a human. This skill leaves the PBI `Committed`.
 - **Independent review.** The session that wrote the code never records its own verdict (SOD-002). Each reviewer is a new subagent with no authoring context.
 - **Run folder.** Keep run state in `<workspace root>/.edie/build-pbi/<PBIId>/` ([reference.md](reference.md#run-folder)). Write `ledger.md` at every checkpoint: after the load, after each PR opens, after each verdict, after each merge, after QA, after the final PR. The folder is a working copy; Azure DevOps and `origin` are the authority. It is never inside a repository clone and never holds PAN, secrets or tokens.
-- **A stopped build is resumed in a fresh session.** When the user stops the build or the checkpoint is reached, offer `--resume` as a New task card (see step 3.12); never restart the implementer in the same session.
+- **A stopped build is resumed in a fresh session.** When the user stops the build, offer `--resume` as a New task card (see step 3.12); never restart the implementer in the same session.
 - **Merge direction does not carry across sessions.** A yes recorded in the ledger for a PR that is still active is not direction (`[GLB-024]`). Ask again.
 - **Reports go to files.** Every subagent writes its full report to `reports/` in the run folder and hands back only the fixed block in [reference.md](reference.md#handback). Do not ask a subagent to repeat its report in chat. Read a report file only when: a verdict raises a question for the user, two reviewers disagree, a loop limit is reached, or the user asks.
 - **Conditions file.** Carried review conditions and decisions live in `conditions.md` in the run folder ([reference.md](reference.md#conditions-file)). The orchestrator is its only writer: it appends each `NEW-CONDITIONS` line from a handback and each decision the user or an approver gives, and updates a row's status from `CONDITIONS` / `CONDITIONS-CHECKED`. Briefs name the file; they never restate its rows.
@@ -71,7 +71,7 @@ Stop and ask if any fails.
 
 Required: PBI ID.
 
-Optional: Task order; PBI branch name; repos to include; `--resume` (see [Resume](#resume---resume)); `--tasks-per-session <n>` (default 3; 0 = no limit); `--followup <source>` (see [Follow-up](#follow-up---followup)), where `<source>` is who raised findings on the final PR: a reviewer's name, `sonar`, or a short phrase; `--close` (see [Close](#close---close)).
+Optional: Task order; PBI branch name; repos to include; `--resume` (see [Resume](#resume---resume)); `--followup <source>` (see [Follow-up](#follow-up---followup)), where `<source>` is who raised findings on the final PR: a reviewer's name, `sonar`, or a short phrase; `--close` (see [Close](#close---close)).
 
 Load, in order:
 
@@ -111,7 +111,7 @@ build-pbi <PBIId>:
   - [ ] Ask user to direct this PR's squash merge
   - [ ] Target guard; Complete-PullRequest -HumanDirected -Squash -DeleteSourceBranch
   - [ ] Confirm squash commit on origin/<PBI branch>; Task → Done
-  - [ ] Checkpoint ledger.md; stop if --tasks-per-session reached
+  - [ ] Checkpoint ledger.md
 - [ ] QA on PBI branch against every AC line (max 3 loops)
 - [ ] Final PR PBI branch → defaultBranch (ready, linked, test plan)
 - [ ] Comment PBI; PBI stays Committed
@@ -152,7 +152,7 @@ For each Task (Task ID order unless the user ordered them):
    Only an explicit yes for **this** PR is direction. If the user declines: stop, leave the Task `In Progress`, report.
 10. **Merge.** Freshness gate. `Get-PullRequest.ps1 -Id <id>`: check the target guard and that the gate verdict is not BLOCKED. Then `Complete-PullRequest.ps1 -Id <id> -HumanDirected -Squash -DeleteSourceBranch`. If the script refuses (gate BLOCKED, required reviewers, policies): stop and report the blocker. No fallback.
 11. **Confirm and close the Task.** `git fetch origin`; confirm `origin/<PBI branch>` has the squash commit. Then `Set-WorkItemState.ps1 -Id <TaskId> -State Done`. Record the squash SHA for the final PR.
-12. **Checkpoint.** Rewrite `ledger.md`. If `--tasks-per-session` Tasks have merged in this session and more remain, stop here, tell the user "Checkpoint written after Task <TaskId>.", and propose `build-pbi <PBIId> --resume` as a New task card for a fresh session (`start_session`, own_initiative, fresh context, `use_worktree: false`, a brief with the PBI, the next Task id, the PBI branch and the run-folder path), proposed with a lesser model than this session. Do not continue in this session. Otherwise continue.
+12. **Checkpoint.** Rewrite `ledger.md`. Continue with the next Task; there is no limit on Tasks per session. If the user stops the build, propose `build-pbi <PBIId> --resume` as a New task card for a fresh session (`start_session`, own_initiative, fresh context, `use_worktree: false`, a brief with the PBI, the next Task id, the PBI branch and the run-folder path), proposed with a lesser model than this session.
 
 A Task spanning repos is split into one slice per repo, each committed as `AB#<TaskId>`. The Task goes `Done` only when every slice is merged.
 

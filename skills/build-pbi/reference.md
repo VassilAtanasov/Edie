@@ -485,7 +485,6 @@ Pass long comments through a file variable, never secrets on the command line.
 | 3 review or QA loops | Task In Progress, PBI Committed | must-fix list |
 | User declines a merge | Task In Progress | PR link |
 | `Complete-PullRequest` refuses | Task In Progress | gate blocker |
-| `--tasks-per-session` reached | Tasks merged so far Done | checkpoint and the `--resume` command |
 | Run folder missing on `--resume` | unchanged | ask whether to continue without carried conditions |
 | Final PR completed or abandoned at `--followup` | unchanged | needs its own work item |
 | A follow-up finding changes AC or Scope | unchanged | the finding and the criterion it touches |
