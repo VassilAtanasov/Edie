@@ -41,12 +41,12 @@ Every subagent above writes its report under `.edie/build-pbi/312486/reports/` a
 
 ### Checkpoint and resume
 
-With the default `--tasks-per-session 3`, a PBI with more Tasks stops after the third merge:
+All Tasks run in one session. If the user stops the build after the third merge:
 
 ```text
 Task <T3>             → Done
 checkpoint            ledger.md written
-stop                  "Start a new session and run build-pbi 312486 --resume to continue with Task <T4>."
+stop (user)           New task card: build-pbi 312486 --resume, to continue with Task <T4>
 ```
 
 New session, `build-pbi 312486 --resume`:
