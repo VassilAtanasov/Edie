@@ -232,6 +232,7 @@ secrets/PAN, change-class triggers. Ignore formatter noise.
 If the diff adds or edits .cs files: check every rule in
 <EDIE_SKILLS>/build-pbi/sonar-rules.md on the added lines of the whole diff. Each hit
 is a must-fix with file:line and the rule id.
+Read every added loop for S3267 (Sonar-only; no local build shows it).
 You may add tests; do not change product behaviour. Say if you added tests.
 Check the open conditions that apply to Task <TaskId> or to "all". Put anything a
 later Task, the final PR or the approver must honour in NEW-CONDITIONS, one line each.
